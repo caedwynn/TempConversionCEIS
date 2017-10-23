@@ -1,0 +1,63 @@
+package com.example.ginac.tempconversionceis;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class InformationResultsActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_information_results);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        Intent intent = getIntent();
+        String season= intent.getStringExtra("season");
+        int temperature=intent.getIntExtra("temperature", 70); //if no int value exists then the method returns the default value
+        String allergies = intent.getStringExtra("allergies");
+
+        TextView txtSeason  = (TextView) findViewById(R.id.txtSeason);
+        TextView txtTemperature = (TextView) findViewById(R.id.txtTemperature);
+        TextView txtAllergies = (TextView) findViewById(R.id.txtAllergies);
+        txtSeason.setText("Your favorite season is "+season);
+        txtTemperature.setText("Your favorite temperature is "+temperature);
+
+        //Depending on whether the allergies are yes or no determines the output of this textbox
+        if(allergies=="Yes")
+            txtAllergies.setText("Sorry that you have allergies");
+        else
+            txtAllergies.setText("You don't have allergies");
+
+
+        Button btnMain = (Button) findViewById(R.id.btnMain);
+        btnMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goMain();
+
+            }
+        });
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+    private void goMain() {
+        Intent intent = new Intent(InformationResultsActivity.this, MainMenuActivity.class);
+        this.startActivity(intent);
+    }
+
+}
